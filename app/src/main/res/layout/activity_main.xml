@@ -1,18 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.cyt.firstkotlindemo.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="145dp"
+        android:background="@drawable/bg_kotlin"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/kt_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_kotlin_logo"
+            tools:layout_editor_absoluteX="27dp"
+            tools:layout_editor_absoluteY="18dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/ktTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="Kotlin"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_constraintLeft_toRightOf="@+id/kt_icon"
+            tools:layout_editor_absoluteY="16dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/demoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Android开发Demo"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/ktTextView"
+            app:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="60dp"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:layout_width="209dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/demoTextView"
+            app:layout_editor_absoluteX="17dp"
+            app:layout_editor_absoluteY="0dp"
+            android:layout_marginTop="15dp"
+            android:hint="使用Kotlin开发Android"
+            android:background="@drawable/bg_edit"
+            android:paddingEnd="50dp"
+            android:paddingStart="22dp"
+            android:textSize="13sp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_search"
+            tools:layout_editor_absoluteX="190dp"
+            tools:layout_editor_absoluteY="105dp"
+            tools:ignore="MissingConstraints" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>
