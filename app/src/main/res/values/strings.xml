@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FirstKotlinDemo</string>
+    <string name="title_name">极客学院</string>
 </resources>
