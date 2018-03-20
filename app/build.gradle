@@ -33,8 +33,9 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     // Anko Commons
     compile 'org.jetbrains.anko:anko-commons:0.10.4'
-    compile 'org.jetbrains.anko:anko-sdk25-coroutines:0.10.4'
+    compile 'org.jetbrains.anko:anko-coroutines:0.10.4'
     // Anko SQLite
     compile 'org.jetbrains.anko:anko-sqlite:0.10.4'
     implementation 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    compile 'org.jsoup:jsoup:1.9.2'
 }
