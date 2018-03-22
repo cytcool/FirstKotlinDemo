@@ -51,6 +51,7 @@ class MyFragment: Fragment() {
                 is LikeEvent->handleLikeEvent(event)
             }
         }
+
     }
 
     private fun handleLikeEvent(event: LikeEvent) {
