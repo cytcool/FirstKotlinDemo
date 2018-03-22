@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.cyt.firstkotlindemo.DetailActivity
 import com.example.cyt.firstkotlindemo.R
 import com.example.cyt.firstkotlindemo.entity.ItemEntity
 import com.squareup.picasso.Picasso
@@ -44,15 +45,15 @@ class MyAdapter(val mList:MutableList<ItemEntity>,val type:String):RecyclerView.
 
             Picasso.with(itemView.context).load(itemEntity.image).into(itemView.adapter_img)
 
-          /*  itemView.setOnClickListener {
-                val intent= Intent(itemView.context,DetailActivity::class.java)
+            itemView.setOnClickListener {
+                val intent= Intent(itemView.context, DetailActivity::class.java)
                 intent.putExtra("url",itemEntity.url)
                 intent.putExtra("title",itemEntity.title)
                 intent.putExtra("is_like",itemEntity.is_like)
                 intent.putExtra("type",type)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 itemView.context.startActivity(intent)
-            }*/
+            }
         }
 
     }

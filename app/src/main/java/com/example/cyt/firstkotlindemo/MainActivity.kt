@@ -2,7 +2,6 @@ package com.example.cyt.firstkotlindemo
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import com.example.cyt.firstkotlindemo.adapter.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
