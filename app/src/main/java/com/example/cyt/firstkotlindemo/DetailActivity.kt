@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.example.cyt.firstkotlindemo.event.LikeEvent
+import com.example.cyt.firstkotlindemo.utils.RxBus
 import kotlinx.android.synthetic.main.activity_detail.*
 
 /**
@@ -12,13 +14,17 @@ import kotlinx.android.synthetic.main.activity_detail.*
  */
 class DetailActivity: AppCompatActivity() {
 
-
+    private var is_like=false
+    private var type=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.hide()
         setContentView(R.layout.activity_detail)
         initView()
     }
+
+
+
 
     private fun initView() {
         val settings=detail_web_view.settings
@@ -32,8 +38,8 @@ class DetailActivity: AppCompatActivity() {
 
         var url=intent.getStringExtra("url")
         val title=intent.getStringExtra("title")
-        val type=intent.getStringExtra("type")
-        val is_like=intent.getBooleanExtra("is_like",false)
+        type=intent.getStringExtra("type")
+        is_like=intent.getBooleanExtra("is_like",false)
 
         detail_title.text=title
         if(is_like){
@@ -46,6 +52,10 @@ class DetailActivity: AppCompatActivity() {
         detail_web_view.loadUrl(url)
 
         detail_back.setOnClickListener { finish() }
+        detail_like.setOnClickListener {
+            is_like=!is_like
+            RxBus.getInstance().send(LikeEvent(type = type,url = url,is_like = is_like))
+        }
 
     }
 

@@ -8,7 +8,7 @@ class ItemEntity (val title:String,
                   val image:String,
                   val url:String,
                   val time_and_class:String,
-                  val is_like:Boolean){
+                  var is_like:Boolean){
 
 
 }

@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.cyt.firstkotlindemo.adapter.MyAdapter
 import com.example.cyt.firstkotlindemo.entity.ItemEntity
+import com.example.cyt.firstkotlindemo.event.LikeEvent
+import com.example.cyt.firstkotlindemo.utils.RxBus
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -36,9 +38,41 @@ class MyFragment: Fragment() {
                 mType=arguments.getString("type")
 
             initRecyclerView(url)
+
+            registerRxBus()
         }
         return mRecycleView
     }
+
+    private fun registerRxBus() {
+        RxBus.getInstance().toObservable().subscribe{
+            event->
+            when(event){
+                is LikeEvent->handleLikeEvent(event)
+            }
+        }
+    }
+
+    private fun handleLikeEvent(event: LikeEvent) {
+        save_database(event)
+        update_ui(event)
+    }
+
+    private fun update_ui(event: LikeEvent) {
+        mList.filter { it.url==event.url }.forEach {
+            it.is_like=event.is_like
+        }
+        mRecycleView!!.adapter.notifyDataSetChanged()
+    }
+
+    private fun save_database(event: LikeEvent) {
+        async(UI){
+            val task= bg {
+
+            }
+        }
+    }
+
 
     private fun initRecyclerView(url:String) {
         async(UI){
