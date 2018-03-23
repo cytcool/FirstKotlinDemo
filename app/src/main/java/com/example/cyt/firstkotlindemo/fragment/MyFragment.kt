@@ -9,19 +9,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.cyt.firstkotlindemo.adapter.MyAdapter
+import com.example.cyt.firstkotlindemo.db.database
 import com.example.cyt.firstkotlindemo.entity.ItemEntity
+import com.example.cyt.firstkotlindemo.entity.LikeModel
 import com.example.cyt.firstkotlindemo.event.LikeEvent
 import com.example.cyt.firstkotlindemo.utils.RxBus
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.coroutines.experimental.bg
+import org.jetbrains.anko.db.classParser
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+import org.jetbrains.anko.db.update
+import org.jetbrains.anko.toast
 import org.jsoup.Jsoup
 
 
 /**
  * Created by CYT on 2018/3/20.
  */
-class MyFragment: Fragment() {
+class MyFragment: Fragment() ,AnkoLogger{
 
     private var mRecycleView:RecyclerView?=null
     private var mList= mutableListOf<ItemEntity>()
@@ -55,12 +63,15 @@ class MyFragment: Fragment() {
     }
 
     private fun handleLikeEvent(event: LikeEvent) {
-        save_database(event)
-        update_ui(event)
+        if(event.type == mType){
+            save_database(event)
+            update_ui(event)
+        }
+
     }
 
     private fun update_ui(event: LikeEvent) {
-        mList.filter { it.url==event.url }.forEach {
+        mList.filter { "http:${it.url}"==event.url }.forEach {
             it.is_like=event.is_like
         }
         mRecycleView!!.adapter.notifyDataSetChanged()
@@ -69,7 +80,25 @@ class MyFragment: Fragment() {
     private fun save_database(event: LikeEvent) {
         async(UI){
             val task= bg {
-
+                activity.database.use {
+                    select("Like","id").whereArgs("(type={type}) and (url={url})",
+                            "type" to event.type,
+                            "url" to event.url).exec {
+                        if (count>0){
+                            update("Like","is_like" to event.is_like).whereArgs("(type={type}) and (url={url})",
+                                    "type" to event.type,
+                                    "url" to event.url).exec().toLong()
+                        }else{
+                            insert("Like","type" to mType,
+                                    "url" to event.url,
+                                    "is_like" to event.is_like)
+                        }
+                    }
+                }
+            }
+            task.await()
+            with(activity){
+                toast("$mType ${event.url}的类型被更新为${event.is_like}")
             }
         }
     }
@@ -94,8 +123,26 @@ class MyFragment: Fragment() {
                         mList.add(entity)
                     }
                 }
+                val DBlist=activity.database.use {
+                    val parser = classParser<LikeModel>()
+                    select("Like","*").whereArgs("(type={type}) and (is_like={is_like})",
+                            "type" to mType!!,
+                            "is_like" to true)
+                            .parseList(parser)
+                }
+
+                mList.forEach {
+                    val itemEntity=it
+                    DBlist.filter { itemEntity.url == it.url }
+                            .forEach{
+                                itemEntity.is_like = true
+                            }
+                }
+
             }
             result.await()
+
+
             mRecycleView!!.adapter=MyAdapter(mList,mType!!)
         }
     }

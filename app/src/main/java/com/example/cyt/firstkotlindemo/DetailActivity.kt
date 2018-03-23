@@ -42,11 +42,7 @@ class DetailActivity: AppCompatActivity() {
         is_like=intent.getBooleanExtra("is_like",false)
 
         detail_title.text=title
-        if(is_like){
-            detail_like.setImageResource(R.drawable.ic_love_full)
-        }else{
-            detail_like.setImageResource(R.drawable.ic_love_empty)
-        }
+        set_like_status()
 
         url="http:$url"
         detail_web_view.loadUrl(url)
@@ -55,8 +51,17 @@ class DetailActivity: AppCompatActivity() {
         detail_like.setOnClickListener {
             is_like=!is_like
             RxBus.getInstance().send(LikeEvent(type = type,url = url,is_like = is_like))
+            set_like_status()
         }
 
+    }
+
+    private fun set_like_status(){
+        if(is_like){
+            detail_like.setImageResource(R.drawable.ic_love_full)
+        }else{
+            detail_like.setImageResource(R.drawable.ic_love_empty)
+        }
     }
 
     inner class MyWebClient: WebViewClient(){
