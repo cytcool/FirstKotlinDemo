@@ -44,4 +44,5 @@ dependencies {
     compile 'io.reactivex:rxkotlin:0.60.0'
 
     compile "org.jetbrains.anko:anko-sqlite:0.10.4"
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 }
